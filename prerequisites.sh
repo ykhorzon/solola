@@ -22,6 +22,7 @@ pip3 install networkx
 pip3 install librosa
 pip3 install --upgrade https://github.com/Theano/Theano/archive/master.zip
 pip3 install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
+pip3 install Flask
 #pip3 install builtins
 #pip3 install theano==1.0.3
 #pip3 install lasagne==0.2.dev1

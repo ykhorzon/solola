@@ -14,3 +14,7 @@ essentia/
 
 # test input folder
 # test_input/
+
+# virtualenv
+venv
+.venv
