@@ -11,11 +11,14 @@ import guitar_trans.parameters as pm
 from guitar_trans import models
 from guitar_trans.song import *
 from guitar_trans.note import *
+# Contour()
 from guitar_trans.contour import *
 from guitar_trans.technique import *
 from guitar_trans.evaluation import evaluation_note, evaluation_esn, evaluation_ts
-from melody_extraction import extract_melody
 from os import path, sep, makedirs
+
+# melody components
+from melody.melody_extraction import extract_melody
 
 N_BIN = int(round(0.14 * 44100))
 N_FRAME = pm.MC_LENGTH
@@ -26,6 +29,7 @@ def transcribe(audio, melody, asc_model_fp, desc_model_fp, save_dir, audio_fn):
     trend, new_melody, notes = note_tracking.tent(melody, debug=save_dir)
     np.savetxt(save_dir+sep+'FilteredMelody.txt', new_melody.seq, fmt='%.8f')
     np.savetxt(save_dir+sep+'TentNotes.txt', [n.discrete_to_cont(pm.HOP_LENGTH, pm.SAMPLING_RATE).array_repr() for n in notes], fmt='%.8f')
+    
     cand_dict = {pm.D_ASCENDING: [], pm.D_DESCENDING: []}
     cand_ranges = []
     rate = old_div(float(pm.HOP_LENGTH), float(pm.SAMPLING_RATE))
@@ -119,15 +123,22 @@ def get_tech(t_name, direction):
         raise ValueError("t_name shouldn't be {}.".format(t_name))
 
 def main(audio_fp, asc_model_fp, desc_model_fp, output_dir, mc_fp=None, eval_note=None, eval_ts=None):
+    # input/output
     audio_fn = path.splitext(path.basename(audio_fp))[0]
     save_dir = path.join(output_dir, audio_fn)
+    print("audio_fp:", audio_fp)
+    # Setup model 
     if mc_fp is None:
         mc, mc_midi = extract_melody(audio_fp, save_dir)
     else:
         mc_midi = np.loadtxt(mc_fp)
+
+    # Prepare transcribed input
     audio, sr = rosa.load(audio_fp, sr=None, mono=True)
     melody = Contour(0, mc_midi)
+
     notes = transcribe(audio, melody, asc_model_fp, desc_model_fp, save_dir, audio_fn)
+    
     if eval_note is not None:
         sg = Song(name=audio_fn)
         sg.load_esn_list(eval_note)
@@ -166,4 +177,3 @@ if __name__ == '__main__':
     args = parser()
     main(args.audio_fp, args.asc_model_fp, args.desc_model_fp, 
          args.output_dir, args.melody_contour, args.evaluate)
-

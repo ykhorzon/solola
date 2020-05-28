@@ -14,3 +14,10 @@ essentia/
 
 # test input folder
 # test_input/
+
+venv
+.venv
+
+env/
+.env/
+.ENV/
