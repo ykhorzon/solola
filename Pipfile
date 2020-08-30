@@ -11,7 +11,7 @@ Cython = "*"
 mir_eval = "*"
 Theano = {file = "https://github.com/Theano/Theano/archive/master.zip"}
 Lasagne = {file = "https://github.com/Lasagne/Lasagne/archive/master.zip"}
-ipython = "*"
+ipython = "==7.15.0"
 numpy = "*"
 matplotlib = "*"
 pyyaml = "*"
@@ -19,6 +19,7 @@ librosa = "*"
 flask = "*"
 flask-socketio = "*"
 pytube3 = "*"
+gunicorn = "==20.0.4"
 
 [dev-packages]
 pylint = "*"

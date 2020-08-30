@@ -32,24 +32,23 @@ If you want to use integrated service(Flask), you use follow usage instructions
 
 ### Usage
 ```bash
-docker run -ti --rm -p 5000:5000 -v E:\workplace\projects\solola\solola\:/solola solola_api/pipenv:1.0 bash
-pipenv shell
-
 # run script
 python
-# start API service
+# start API service without docker(transcription)
 python3 services/API/api.py
 ```
 
-```
-docker run -ti --rm -p 5000:5000 -v E:\workplace\projects\solola\solola\:/solola solola_api/pipenv:1.0 bash
-cd /solola
-pipenv install
+development
+```bash
+docker run -it --name test -p 5000:5000 solola_api:0.9.3
 ```
 
-
+testing entry.sh
+```bash
+docker run -it --rm -p 5000:5000 -v [wsl_project_path]:/home/solola solola_api:0.9.3
+```
 ### Build Image
 <pre>
 cd [project_root]
-docker build -t solola_api/pipenv:[tag] -f docker/Dockerfile.pipenv.dev .
+docker build -t solola_api:[tag] -f docker/Dockerfile.pipenv.dev 
 </pre>

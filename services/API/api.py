@@ -6,7 +6,7 @@ sys.path.append(root_path)
 from flask import Flask, jsonify, render_template
 from flask_socketio import SocketIO, emit, send
 from pytube import YouTube
-import main
+# import main
 # import ffmpeg
 
 app = Flask(__name__)
@@ -78,7 +78,7 @@ def start_transcription(req):
     output_dir = 'E:\workplace\projects\solola\solola\services\mzxml'
     default_asc_model = 'models/cnn_normmc/ascending.npz'
     default_desc_model = 'models/cnn_normmc/descending.npz'
-    main.main(audio_file_path, default_asc_model, default_desc_model, output_dir)
+    # main.main(audio_file_path, default_asc_model, default_desc_model, output_dir)
 
     # synthesize mzxml
     pass
